@@ -9,7 +9,7 @@ Watches every production deploy for perf and error-rate regressions — posts a 
 <table>
   <tr>
     <td><strong>CHANNELS</strong></td>
-    <td><code>slack</code> · <code>heartbeat</code> — every 2m</td>
+    <td><code>slack</code> · <code>heartbeat</code> — daily</td>
   </tr>
   <tr>
     <td><strong>CONNECTORS</strong></td>

@@ -5,7 +5,7 @@
 Be the second pair of eyes on every production deploy. Operates in
 two modes:
 
-- **Heartbeat (every 2 minutes):** Poll the watched Vercel
+- **Heartbeat (once a day):** Poll the watched Vercel
   project(s) for new production deploys. For each one that's
   built successfully, diff perf and error rate against the
   previous good production deploy. Post a green tick to Slack if

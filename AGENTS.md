@@ -9,7 +9,7 @@ This folder contains the source for a Skilled Agent originally built for the Val
 ### Channels
 
 - **slack** (slack): The agent's per-agent Slack bot. Listens for @mentions and replies in-thread, and posts deploy alerts (green tick or rollback recommendation) to whichever channels the bot has been invited to. Slack writes use the auto-injected outbound Slack connector.
-- **heartbeat** (heartbeat): Fires every 2 minutes. Polls each watched Vercel project for new production deploys, evaluates each one against the previous good deploy, and posts the result. Declared inline in `valet.yaml`, so it's created automatically by the dashboard setup flow.
+- **heartbeat** (heartbeat): Fires once a day. Polls each watched Vercel project for new production deploys, evaluates each one against the previous good deploy, and posts the result. Declared inline in `valet.yaml`, so it's created automatically by the dashboard setup flow.
 
 ### Secrets
 
@@ -25,7 +25,7 @@ This agent uses the OAuth variant of the Vercel MCP, so no API token is needed a
 
 ## Customizing
 
-- **Change the heartbeat interval**: edit `every` on the `heartbeat` channel in `valet.yaml`, then redeploy. The default `2m` keeps detection latency low without hammering Vercel; `1m` is the floor that's worth it, `5m` is reasonable if you deploy infrequently.
+- **Change the heartbeat interval**: edit `every` on the `heartbeat` channel in `valet.yaml`, then redeploy. The default `24h` runs a daily deploy review; drop it to `1h` or `5m` if you deploy often and want regressions caught closer to release time.
 - **Tune the regression thresholds**: open SOUL.md "Phase 4: Diff against the previous good deploy" and edit the multipliers and absolute-value floors. The defaults (error rate > 2x AND > 0.5%; p95 > 1.5x AND > 500ms) avoid noise on low-traffic projects but catch real regressions on busy ones. Lower the absolute-value floors if your projects have very low baseline error rates and you want tighter alerting.
 - **Watch a different scope of projects**: set or update `VERCEL_PROJECTS` on the agent to a comma-separated list of project ids or names. Unset it to fall back to every project the OAuth grant exposes.
 - **Control where deploy alerts post**: invite or remove the bot from channels in Slack — that's the only signal the agent uses. There is no channel name in the configuration.

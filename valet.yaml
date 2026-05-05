@@ -19,7 +19,7 @@ story:
     - role: trigger
       title: "A new production deploy lands."
       body: >-
-        The heartbeat fires every 2 minutes and detects new prod
+        The heartbeat fires once a day and detects new prod
         deploys on the watched project(s) — no Vercel webhook to
         configure.
     - role: action
@@ -70,5 +70,5 @@ channels:
       done_note: "Bot ready — invite it to a channel"
 
   - type: heartbeat
-    every: 2m
-    description: "Polls watched Vercel project(s) every 2 minutes for new production deploys to evaluate."
+    every: 24h
+    description: "Polls watched Vercel project(s) once a day for new production deploys to evaluate."

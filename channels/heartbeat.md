@@ -1,6 +1,6 @@
 # Deploy Sweep (Heartbeat)
 
-The heartbeat channel fires every 2 minutes. There is no payload
+The heartbeat channel fires once a day. There is no payload
 to parse — your job is to detect new production deploys on the
 watched Vercel project(s) since the last sweep, evaluate each
 one, and post the result to Slack.
