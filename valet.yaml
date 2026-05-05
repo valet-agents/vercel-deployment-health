@@ -6,6 +6,9 @@ description: >-
   rollback recommendation if anything regresses.
 category: engineering
 
+example:
+  prompt: "Anything off about the last release?"
+
 story:
   hero: "Your deploys, reviewed every day."
   subheadline: >-
