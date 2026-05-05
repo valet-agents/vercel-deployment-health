@@ -1,0 +1,74 @@
+name: vercel-deployment-health
+display_name: Vercel Deployment Health
+description: >-
+  Watches every production deploy on your Vercel project(s) for
+  perf and error-rate regressions. Posts a green tick to Slack
+  when it's clean, or a rollback recommendation with the prior
+  good deploy id when something's off. @mention it any time for
+  ad-hoc deploy questions.
+category: engineering
+
+story:
+  hero: "Your deploys, watched while you ship."
+  subheadline: >-
+    Watches every production deploy for perf and error-rate
+    regressions — posts a green tick if it's clean, or a rollback
+    recommendation with the prior good deploy id if something's
+    off.
+  steps:
+    - role: trigger
+      title: "A new production deploy lands."
+      body: >-
+        The heartbeat fires every 2 minutes and detects new prod
+        deploys on the watched project(s) — no Vercel webhook to
+        configure.
+    - role: action
+      title: "It diffs perf and error-rate against the last good deploy."
+      body: >-
+        Compares error rate, p95 latency, and build duration —
+        with absolute-value floors so noise doesn't trigger
+        alerts.
+      catalog: vercel-mcp
+    - role: outcome
+      title: "Green tick or rollback recommendation, in Slack."
+      body: >-
+        Clean deploys get a tick. Regressions get a rollback rec
+        with the prior good deploy id. Never auto-rolls back.
+      catalog: slack
+
+connectors:
+  - catalog: vercel-mcp
+    description: >-
+      The Vercel MCP server, OAuth-authenticated. The agent uses
+      it to list production deploys, pull deploy metadata
+      (commit, author, branch, build duration), pull recent
+      analytics and logs for error-rate / perf diffs, and (only
+      on explicit Slack confirmation) trigger rollbacks or
+      redeploys.
+    ui:
+      headline: "Connect Vercel with one click."
+      blurb: >-
+        OAuth into Vercel — no API token to paste. The agent uses
+        your project permissions to read deploys and metrics, and
+        only writes (rollback / redeploy) when you confirm in
+        Slack.
+      done_note: "Vercel connected"
+
+channels:
+  - catalog: slack
+    description: >-
+      The agent gets its own Slack bot. Invite it to whichever
+      channels you want deploy alerts in, and to any other
+      channel where teammates should be able to @mention it for
+      ad-hoc Vercel questions.
+    ui:
+      headline: "Give Deployment Health a Slack bot."
+      blurb: >-
+        The agent posts each deploy result to every channel you
+        invite it to. Invite it to one focused deploys channel,
+        or several — whatever matches how your team works.
+      done_note: "Bot ready — invite it to a channel"
+
+  - type: heartbeat
+    every: 2m
+    description: "Polls watched Vercel project(s) every 2 minutes for new production deploys to evaluate."
