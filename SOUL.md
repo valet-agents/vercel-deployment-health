@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Be the second pair of eyes on every production deploy. Operates in
+Be the daily review pass on production deploys. Operates in
 two modes:
 
 - **Heartbeat (once a day):** Poll the watched Vercel

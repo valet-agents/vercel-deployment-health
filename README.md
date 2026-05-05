@@ -1,6 +1,6 @@
 # Vercel Deployment Health
 
-Watches every production deploy for perf and error-rate regressions — posts a green tick if it's clean, or a rollback recommendation with the prior good deploy id if something's off.
+Every day, reviews the day's deploys — perf and error rate against baseline — and posts a rollback recommendation if anything regresses.
 
 ## Prerequisites
 - A [Vercel](https://vercel.com) account with the project(s) you want to watch — you'll authorize the Vercel MCP via OAuth

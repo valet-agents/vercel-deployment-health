@@ -1,39 +1,36 @@
 name: vercel-deployment-health
 display_name: Vercel Deployment Health
 description: >-
-  Watches every production deploy on your Vercel project(s) for
-  perf and error-rate regressions. Posts a green tick to Slack
-  when it's clean, or a rollback recommendation with the prior
-  good deploy id when something's off. @mention it any time for
-  ad-hoc deploy questions.
+  Every day, reviews the day's Vercel production deploys — perf
+  and error rate vs the prior healthy deploy — and posts a
+  rollback recommendation if anything regresses.
 category: engineering
 
 story:
-  hero: "Your deploys, watched while you ship."
+  hero: "Your deploys, reviewed every day."
   subheadline: >-
-    Watches every production deploy for perf and error-rate
-    regressions — posts a green tick if it's clean, or a rollback
-    recommendation with the prior good deploy id if something's
-    off.
+    Every day, reviews the day's deploys — perf and error rate
+    against baseline — and posts a rollback recommendation if
+    anything regresses.
   steps:
     - role: trigger
-      title: "A new production deploy lands."
+      title: "Every morning."
       body: >-
-        The heartbeat fires once a day and detects new prod
-        deploys on the watched project(s) — no Vercel webhook to
-        configure.
+        The heartbeat fires once a day and reviews every
+        production deploy that landed since the last run.
     - role: action
       title: "It diffs perf and error-rate against the last good deploy."
       body: >-
-        Compares error rate, p95 latency, and build duration —
-        with absolute-value floors so noise doesn't trigger
-        alerts.
+        For each deploy in the batch, compares error rate, p95
+        latency, and build duration — with floors so noise
+        doesn't fire.
       catalog: vercel-mcp
     - role: outcome
       title: "Green tick or rollback recommendation, in Slack."
       body: >-
-        Clean deploys get a tick. Regressions get a rollback rec
-        with the prior good deploy id. Never auto-rolls back.
+        Clean days get a tick. Any regression in the batch gets a
+        rollback rec with the prior good deploy id. Never
+        auto-rolls back.
       catalog: slack
 
 connectors:
